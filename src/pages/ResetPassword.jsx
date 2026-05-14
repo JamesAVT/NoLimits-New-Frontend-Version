@@ -208,7 +208,6 @@ export default function ResetPassword() {
             fontWeight: '700',
             fontSize: '16px',
 
-
           }}
         >
           {loading ? 'Actualizando...' : 'Guardar contraseña'}
