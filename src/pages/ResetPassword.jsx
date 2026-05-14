@@ -195,48 +195,9 @@ export default function ResetPassword() {
           </button>
         </div>
 
-          background: 'var(--nl-bg-elevated)',
-        }}
-      >
-        <h2 style={{ marginBottom: '20px' }}>
-          Nueva contraseña
-        </h2>
-
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={8}
-          style={{
-            width: '100%',
-            height: '48px',
-            marginBottom: '16px',
-            padding: '0 12px',
-          }}
-        />
-        <input
-            type="password"
-            placeholder="Confirmar contraseña"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            style={{
-                width: '100%',
-                height: '48px',
-                marginBottom: '16px',
-                padding: '0 12px',
-        }}
-        />
-
-
         <button
-          type="submit"
-          disabled={loading}
           style={{
             width: '100%',
-
             height: '52px',
             cursor: 'pointer',
             border: 'none',
@@ -247,8 +208,6 @@ export default function ResetPassword() {
             fontWeight: '700',
             fontSize: '16px',
 
-            height: '48px',
-            cursor: 'pointer',
 
           }}
         >
