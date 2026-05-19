@@ -430,6 +430,12 @@ function Detail() {
 
   const handleReaccionReview = async (reviewId, tipoReaccion) => {
     try {
+      if (!isLoggedIn()) {
+        alert("Debes iniciar sesión para reaccionar a una reseña");
+        navigate("/login");
+        return;
+      }
+
       const user = JSON.parse(localStorage.getItem("nl_user"));
 
       const usuarioId =
@@ -883,64 +889,51 @@ function Detail() {
                         style={{
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '12px',
+                          justifyContent: 'space-between',
                           marginTop: 'var(--space-3)',
                         }}
                       >
-                        <button
-                          onClick={() => handleReaccionReview(review.id, 'LIKE')}
-                          style={{
-                            background: 'transparent',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: 'var(--nl-text-secondary)',
-                            fontSize: '14px',
-                          }}
-                        >
-                          👍 {review.likes ?? 0}
-                        </button>
+                        {review.usuarioId === usuarioActualId ? (
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              onClick={() => {
+                                setReviewText(review.contenido);
+                                setEditingReviewId(review.id);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                              }}
+                            >
+                              Editar reseña
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEliminarReview(review.obraId)}
+                              style={{ color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.2)' }}
+                            >
+                              Eliminar reseña
+                            </Button>
+                          </div>
+                        ) : (
+                          <span />
+                        )}
 
-                        <button
-                          onClick={() => handleReaccionReview(review.id, 'DISLIKE')}
-                          style={{
-                            background: 'transparent',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: 'var(--nl-text-secondary)',
-                            fontSize: '14px',
-                          }}
-                        >
-                          👎 {review.dislikes ?? 0}
-                        </button>
-                      </div>
-
-                      {review.usuarioId === usuarioActualId && (
-                        <div style={{ display: 'flex', gap: '8px', marginTop: 'var(--space-3)' }}>
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => {
-                              setReviewText(review.contenido);
-                              setEditingReviewId(review.id);
-                              window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <button
+                            onClick={() => handleReaccionReview(review.id, 'LIKE')}
+                            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--nl-text-secondary)', fontSize: '14px' }}
                           >
-                            Editar reseña
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEliminarReview(review.obraId)}
-                            style={{
-                              color: '#ff6b6b',
-                              borderColor: 'rgba(255,107,107,0.2)',
-                            }}
+                            👍 {review.likes ?? 0}
+                          </button>
+                          <button
+                            onClick={() => handleReaccionReview(review.id, 'DISLIKE')}
+                            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--nl-text-secondary)', fontSize: '14px' }}
                           >
-                            Eliminar reseña
-                          </Button>
+                            👎 {review.dislikes ?? 0}
+                          </button>
                         </div>
-                      )}
+                      </div>
                     </div>
                   ))}
                 </div>
